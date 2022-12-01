@@ -43,6 +43,6 @@ const makeGroups = array => {
 	};
 
 	// Iterate the groups and find the largest total number of calories
-	for (let i = 0; i < groups.length; i++) handleGroup(groups[i], i);
+	for (const group of groups) handleGroup(group);
 	console.log(largestTotalCarriedCalories);
 })();
