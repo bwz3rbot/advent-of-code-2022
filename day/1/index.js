@@ -1,12 +1,5 @@
 // Read file input and replace all /r and /n characters
-const getInput = async day => {
-	const path = require("path");
-	const fs = require("fs/promises");
-	return (await fs.readFile(path.join("day", day, "input.txt"), "utf8"))
-		.replace(/\r\n/g, " ")
-		.split(" ");
-};
-
+const getInput = require("../../util/getInput");
 /* Create a multidimensional array by iterating the rows and
 	if an empty string is found, create a new group. */
 const makeGroups = array => {
@@ -25,7 +18,7 @@ const makeGroups = array => {
 };
 (async () => {
 	// Read the file
-	const input = await getInput("1");
+	const input = (await getInput("1")).replace(/\r\n/g, " ").split(" ");
 
 	// Create groups
 	const groups = makeGroups(input);
