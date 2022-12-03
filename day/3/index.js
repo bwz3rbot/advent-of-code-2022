@@ -59,12 +59,67 @@ const inspectRucksack = rucksack => {
 	};
 };
 
+// part 2
+const makeElfGroups = (arr, size = 3) => {
+	const batches = [];
+	for (let i = 0; i < arr.length; i += size) {
+		batches.push(arr.slice(i, i + size));
+	}
+	return batches;
+};
+
+/* 
+    search through the group of elves' rucksacks
+    to find the item shared between all of them
+*/
+const identifyGroup = rucksacks => {
+	return (
+		rucksacks
+			// split the rucksack into individual items
+			.map(rucksack => rucksack.split(""))
+			// take the first rucksack
+			.shift()
+			// find within the first rucksack
+			.find(item =>
+				// if item exists within all 3 rucksacks, return it
+				rucksacks.every(rucksack => rucksack.indexOf(item) !== -1)
+			)
+	);
+};
+
 getInput(3).then(i => {
 	const rucksacks = i.split("\n");
-	const contents = rucksacks.map(inspectRucksack);
-	const sumPriorities = contents.reduce(
-		(prev, curr) => (prev += curr.total),
-		0
-	);
-	console.log(sumPriorities);
+
+	const part1 = () => {
+		// Inspect and prioritize matching contents between compartments
+		const contents = rucksacks.map(inspectRucksack);
+		const sumPriorities = contents.reduce(
+			(prev, curr) => (prev += curr.total),
+			0
+		);
+		// Part 1 answer:
+		console.log(sumPriorities);
+	};
+
+	const part2 = () => {
+		// split elves up into groups of 3
+		const groups = makeElfGroups(rucksacks, 3);
+		// find matching items between the groups of elves' rucksacks
+		const groupIdentifier = groups.map(identifyGroup);
+
+		// Attach priorities to badges
+		const priorities = groupIdentifier.map(identifier => {
+			return {
+				identifier,
+				priority: getPriority(identifier),
+			};
+		});
+		const sumPriorities = priorities.reduce(
+			(prev, curr) => (prev += curr.priority),
+			0
+		);
+		// Part 2 answer:
+		console.log(sumPriorities);
+	};
+	part2();
 });
