@@ -7,9 +7,6 @@ const lettersUpperCase = lettersLowerCase.map(letter =>
 	letter.toUpperCase(letter)
 );
 
-// Test if char is uppercase / lowercase
-const isUpperCase = char => (char === char.toUpperCase() ? true : false);
-
 /*
     Assign priority to each upper/lower-case letter in the alphabet as per instructions:
     https://adventofcode.com/2022/day/3
